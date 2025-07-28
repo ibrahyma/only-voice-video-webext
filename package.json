@@ -1,0 +1,27 @@
+{
+  "name": "only-voice-video",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "build-watch": "vite build",
+    "start": "web-ext run --devtools"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/chrome": "^0.1.1",
+    "@types/firefox-webext-browser": "^120.0.4",
+    "@types/webextension-polyfill": "^0.12.3",
+    "rollup-plugin-copy": "^3.5.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vite-plugin-static-copy": "^3.0.2",
+    "web-ext": "^8.8.0",
+    "webextension-polyfill": "^0.12.0"
+  }
+}

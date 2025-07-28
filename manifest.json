@@ -1,0 +1,38 @@
+{
+    "manifest_version": 3,
+    "name": "Only Voice Video",
+    "version": "0.0.1",
+
+    "description": "Extension destinée à filtrer le son d'une vidéo pour ne conserver que les paroles.",
+
+    "icons": {
+        "16": "icons/logo-16.png",
+        "32": "icons/logo-32.png",
+        "48": "icons/logo-48.png",
+        "64": "icons/logo-64.png",
+        "96": "icons/logo-96.png",
+        "128": "icons/logo-128.png"
+    },
+
+    "permissions": [ "activeTab", "tabs", "storage" ],
+
+    "host_permissions": [ "<all_urls>" ],
+
+    "background": {
+        "service_worker": "build/background.js",
+        "scripts": [ "build/background.js" ]
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["build/main.js"]
+        }
+    ],
+    
+    "action": {
+        "default_icon": "icons/logo-32.png",
+        "default_title": "Only voice video",
+        "default_popup": "build/popups/home/index.html"
+    }
+}

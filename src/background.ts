@@ -1,9 +1,10 @@
-import {ExtensionMessage, ExtensionResponse} from "./types/video";
+import {Cookie, ExtensionMessage, ExtensionResponse} from "./types/video";
 import {Runtime} from "webextension-polyfill";
 import {ExtState} from "./types/state";
 
 class VideoManager {
-    public readonly BACKEND_BASEDOMAIN = "localhost:8000";
+    public readonly BACKEND_PROTOCOL = "http";
+    public readonly BACKEND_BASEDOMAIN = "127.0.0.1:55942";
     private state!: ExtState;
 
     constructor() {
@@ -57,11 +58,13 @@ class VideoManager {
 
             switch (request.action) {
                 case "getVideos":
-                    if (!request.url) {
+                    if (!request.url)
                         throw new Error("URL manquante");
-                    }
 
-                    await this.getVideosAPI(sendResponse);
+                    // if (!request.cookies)
+                    //     throw new Error("Cookies manquants");
+
+                    await this.getVideosAPI(/*request.cookies, */sendResponse);
                     break;
 
                 case "getState":
@@ -84,6 +87,7 @@ class VideoManager {
     }
 
     private async getVideosAPI(
+        // cookies: Cookie[],
         sendResponse: (response?: ExtensionResponse) => void
     ) {
         this.state.loadingState.inProgress = true;
@@ -98,11 +102,12 @@ class VideoManager {
         await browser.runtime.sendMessage(message);
 
         try {
-            const response = await fetch(`http://${this.BACKEND_BASEDOMAIN}/convert?url=${encodeURIComponent(currentUrl)}`, {
+            const response = await fetch(`${this.BACKEND_PROTOCOL}://${this.BACKEND_BASEDOMAIN}/convert?url=${encodeURIComponent(currentUrl)}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                }
+                },
+                // body: JSON.stringify(cookies)
             });
 
             if (response.status === 404) {

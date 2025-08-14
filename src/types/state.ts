@@ -11,10 +11,4 @@ export interface ExtState {
 
 interface LoadingState {
     inProgress: boolean;
-    // percentage: number;
-    // steps: {
-    //     current: number;
-    //     total: number;
-    //     designation: string;
-    // }
 }

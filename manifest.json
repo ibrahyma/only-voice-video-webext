@@ -3,6 +3,12 @@
     "name": "Only Voice Video",
     "version": "0.0.1",
 
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "onlyvoicevideo@devdebrouillard.com"
+        }
+    },
+
     "description": "Extension destinée à filtrer le son d'une vidéo pour ne conserver que les paroles.",
 
     "icons": {
@@ -14,12 +20,11 @@
         "128": "icons/logo-128.png"
     },
 
-    "permissions": [ "activeTab", "tabs", "storage" ],
+    "permissions": [ "activeTab", "tabs", "storage", "cookies" ],
 
     "host_permissions": [ "<all_urls>" ],
 
     "background": {
-        "service_worker": "build/background.js",
         "scripts": [ "build/background.js" ]
     },
 

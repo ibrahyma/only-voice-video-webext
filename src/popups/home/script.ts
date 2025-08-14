@@ -2,6 +2,7 @@ import {ExtensionMessage, ExtensionResponse, Video} from "../../types/video";
 import {ExtState} from "../../types/state";
 import {Tabs} from "webextension-polyfill";
 import Tab = Tabs.Tab;
+import {getUrlDomain} from "../../utils/functions";
 
 class HomePopupUI {
     private extState!: ExtState;
@@ -11,6 +12,7 @@ class HomePopupUI {
     private fetchVideosButton!: HTMLButtonElement;
 
     constructor() {
+
         const construct = async () => {
             await this.load();
         };
@@ -27,6 +29,7 @@ class HomePopupUI {
 
     private async load() {
         await this.getState();
+
         const { loadingState, videos, error } = this.extState;
         const existingVideosSection = document.querySelector("#videos") as HTMLElement;
 
@@ -61,7 +64,6 @@ class HomePopupUI {
         if (error) {
             this.showErrorMessage();
         }
-
     }
 
     private handleMessage = async (message: any) => {
@@ -99,7 +101,11 @@ class HomePopupUI {
 
     private async fetchVideos() {
         const currentTab = this.extState.currentTab as Tab;
-        const message: ExtensionMessage = { action: "getVideos", destination: "background", url: currentTab.url };
+        // const cookies = await browser.cookies.getAll({ domain: getUrlDomain(this.extState.currentTab.url!)});
+
+        const message: ExtensionMessage = {
+            action: "getVideos", destination: "background",
+            url: currentTab.url/*, cookies*/ };
 
         const response = (await browser.runtime.sendMessage(message)) as ExtensionResponse;
 
